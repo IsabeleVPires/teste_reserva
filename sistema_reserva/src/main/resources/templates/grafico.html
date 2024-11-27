@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gráfico de Livros</title>
+    <title>Gráfico de Livros Disponíveis</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -41,57 +43,46 @@
 </head>
 <body>
 <h1>Gráfico de Livros Disponíveis</h1>
-<canvas id="livrosChart"></canvas>
-<button onclick="window.location.href='/'">Voltar para a Página Inicial</button>
+
+<div>
+    <canvas id="graficoLivros" width="400" height="200"></canvas>
+</div>
 
 <script>
-    // Função para buscar os dados do backend
-    async function fetchLivrosEstatisticas() {
-        try {
-            const response = await fetch('/api/livros/estatisticas');
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            console.error("Erro ao buscar os dados:", error);
-            return { disponiveis: 0, indisponiveis: 0 }; // Em caso de erro, retorna valores padrão
-        }
-    }
+    // Função para buscar os dados da API
+    fetch('/estatisticas')
+        .then(response => response.json())
+        .then(data => {
+            // Obter os valores dos livros disponíveis e não disponíveis
+            const disponiveis = data.disponiveis;
+            const indisponiveis = data.indisponiveis;
 
-    // Função para inicializar o gráfico
-    async function initChart() {
-        const data = await fetchLivrosEstatisticas();
-
-        const chartData = {
-            labels: ['Disponíveis', 'Indisponíveis'],
-            datasets: [{
-                data: [data.disponiveis, data.indisponiveis], // Dados dinâmicos do backend
-                backgroundColor: ['#36a2eb', '#ff6384'],
-                hoverBackgroundColor: ['#63b4ee', '#ff8494']
-            }]
-        };
-
-        const config = {
-            type: 'pie', // Tipo do gráfico (pizza)
-            data: chartData,
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        enabled: true,
+            // Criar o gráfico com os dados recebidos
+            const ctx = document.getElementById('graficoLivros').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar', // Tipo de gráfico (pode ser 'bar', 'line', 'pie', etc.)
+                data: {
+                    labels: ['Disponíveis', 'Indisponíveis'], // Labels do gráfico
+                    datasets: [{
+                        label: 'Quantidade de Livros',
+                        data: [disponiveis, indisponiveis], // Dados a serem plotados
+                        backgroundColor: ['#4caf50', '#f44336'], // Cores de fundo para as barras
+                        borderColor: ['#4caf50', '#f44336'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true, // Tornar o gráfico responsivo
+                    scales: {
+                        y: {
+                            beginAtZero: true // Garantir que o eixo Y começa do zero
+                        }
                     }
                 }
-            }
-        };
-
-        const ctx = document.getElementById('livrosChart').getContext('2d');
-        new Chart(ctx, config);
-    }
-
-    // Inicializar o gráfico ao carregar a página
-    initChart();
+            });
+        })
+        .catch(error => console.error('Erro ao carregar os dados:', error));
 </script>
+
 </body>
 </html>

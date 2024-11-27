@@ -6,15 +6,11 @@ import java.util.List;
 
 public interface LivroRepository extends JpaRepository<Livro, Long> {
 
-    // Contar livros disponíveis
-    long countByDisponivelTrue();
-
-    // Contar livros indisponíveis
-    long countByDisponivelFalse();
 
     // Buscar todos os livros disponíveis
     List<Livro> findByDisponivelTrue();
-
+    Long countByDisponivelTrue();  // Contar livros disponíveis (true)
+    Long countByDisponivelFalse(); // Contar livros não disponíveis (false)
 
     //Long countByDisponivel(int i);
 }

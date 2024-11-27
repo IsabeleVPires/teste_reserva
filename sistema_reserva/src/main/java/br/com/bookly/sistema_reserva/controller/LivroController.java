@@ -56,6 +56,18 @@ public class LivroController {
         return "grafico"; // Nome da página HTML para o gráfico
     }
 
+    @GetMapping("/estatisticas")
+    @ResponseBody
+    public Map<String, Long> getEstatisticasLivros() {
+        Long disponiveis = livroRepository.countByDisponivelTrue();  // Contar livros disponíveis
+        Long indisponiveis = livroRepository.countByDisponivelFalse(); // Contar livros não disponíveis
+
+        Map<String, Long> estatisticas = new HashMap<>();
+        estatisticas.put("disponiveis", disponiveis);
+        estatisticas.put("indisponiveis", indisponiveis);
+
+        return estatisticas;
+    }
 
 
 }
