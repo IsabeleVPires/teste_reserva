@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Optional;
+import java.util.Map;
 
 @Controller
 public class LivroController {
@@ -31,7 +33,7 @@ public class LivroController {
         Optional<Livro> livroOpt = livroRepository.findById(id);
         if (livroOpt.isPresent()) {
             model.addAttribute("livro", livroOpt.get());
-            return "reservar"; // Tela para reservar livro
+            return "reservar"; // Nome da página reservar.html
         }
         return "livroNaoEncontrado"; // Caso o livro não seja encontrado
     }
@@ -47,4 +49,13 @@ public class LivroController {
         }
         return "livroNaoEncontrado"; // Caso o livro não seja encontrado
     }
+
+
+    @GetMapping("/grafico")
+    public String exibirGrafico() {
+        return "grafico"; // Nome da página HTML para o gráfico
+    }
+
+
+
 }

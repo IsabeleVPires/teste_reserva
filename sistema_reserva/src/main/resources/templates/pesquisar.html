@@ -5,23 +5,120 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pesquisar Livros</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #f4f7fc;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 100vh;
+    }
+
+    header {
+        background-color: #007bff;
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 2rem;
+    }
+
+    header .btn {
+        display: inline-block;
+        background-color: #28a745;
+        color: white;
+        padding: 12px 25px;
+        font-size: 1rem;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 8px;
+        margin-top: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    header .btn:hover {
+        background-color: #218838;
+        transform: translateY(-3px);
+    }
+
+    .container {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .container ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .container li {
+        background-color: #fff;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .container li:hover {
+        transform: translateY(-3px);
+        background-color: #f1f1f1;
+    }
+
+    .container li a {
+        text-decoration: none;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #007bff;
+        transition: color 0.3s ease;
+    }
+
+    .container li a:hover {
+        color: #0056b3;
+    }
+
+    .container li span {
+        display: block;
+        margin-top: 5px;
+        font-size: 1rem;
+        color: #555;
+    }
+
+    footer {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 10px;
+    }
+  </style>
 </head>
 <body>
+
 <header>
   <h1>Livros Disponíveis</h1>
   <a href="/" class="btn">Voltar para a Página Inicial</a>
 </header>
-<div>
+
+<div class="container">
   <ul>
-    <th:block th:each="livro : ${livros}">
-      <li>
-        <a th:href="@{/reservar/{id}(id=${livro.id})}" th:text="${livro.titulo}"></a>
-      </li>
-    </th:block>
+    <li th:each="livro : ${livros}">
+      <a th:href="@{'/reservar/' + ${livro.id}}">[[${livro.titulo}]]</a>
+      <span>por [[${livro.autor}]]</span>
+    </li>
   </ul>
 </div>
+
 <footer>
   <p>&copy; 2024 Sistema de Reserva</p>
 </footer>
+
 </body>
 </html>
