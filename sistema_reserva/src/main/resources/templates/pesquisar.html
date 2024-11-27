@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pesquisar Livros</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1>Livros Disponíveis</h1>
+  <a href="/" class="btn">Voltar para a Página Inicial</a>
+</header>
+<div>
+  <ul>
+    <th:block th:each="livro : ${livros}">
+      <li>
+        <a th:href="@{/reservar/{id}(id=${livro.id})}" th:text="${livro.titulo}"></a>
+      </li>
+    </th:block>
+  </ul>
+</div>
+<footer>
+  <p>&copy; 2024 Sistema de Reserva</p>
+</footer>
+</body>
+</html>

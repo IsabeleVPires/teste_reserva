@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservar Livro</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1>Reservar Livro</h1>
+  <a href="/pesquisar" class="btn">Voltar para a Pesquisa</a>
+</header>
+<div>
+  <h2 th:text="'Você está reservando o livro: ' + ${livro.titulo}"></h2>
+  <form th:action="@{/reservar/{id}(id=${livro.id})}" method="post">
+    <label for="dataReserva">Escolha a data da reserva:</label>
+    <input type="date" id="dataReserva" name="dataReserva" required>
+    <button type="submit">Concluir Reserva</button>
+  </form>
+</div>
+<footer>
+  <p>&copy; 2024 Sistema de Reserva</p>
+</footer>
+</body>
+</html>
